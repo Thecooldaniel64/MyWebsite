@@ -145,27 +145,7 @@
                     </div>
 
                     <!-- Skills -->
-                    <script>
-        function sendEmailAndRedirect() {
-            // Email details (replace these with your variables)
-            const recipientEmail = "recipient@example.com";  // Replace with your recipient email
-            const subject = "Your Subject Here";             // Replace with your email subject
-            const body = "Your email body content here";    // Replace with your email body
-            
-            // Construct the mailto link
-            const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            
-            // Open the user's default email client
-            window.location.href = mailtoLink;
-            
-            // Redirect to the sent page after a short delay
-            setTimeout(function() {
-                window.location.href = "sent.html";
-            }, 500); // 0.5 second delay to allow email client to open
-        }
-    </script>
-                    <button onclick="sendEmailAndRedirect()">Send Email</button>
-                    <h3 class="accent-text mt-5 mb-4">Technical Skills 2</h3>
+                    <h3 class="accent-text mt-5 mb-4">Technical Skills</h3>
                     <div class="row">
                         <div class="col-6 col-md-4"><div class="skill-badge">Conversational English</div></div>
                         <div class="col-6 col-md-4"><div class="skill-badge">Php</div></div>
