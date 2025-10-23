@@ -11,25 +11,27 @@
     
     <style>
         :root {
-            --primary-color: #2a2a2a;
+            --primary-color: #2d2d2d;
             --accent-color: #ffffff;
             --text-color: #ffffff;
+            --skill-hover: #404040;
+            --section-border: #4a4a4a;
         }
 
         body {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
             color: var(--text-color);
             font-family: 'Segoe UI', sans-serif;
         }
 
         .navbar {
             background-color: var(--primary-color) !important;
-            border-bottom: 1px solid #404040;
+            border-bottom: 1px solid var(--section-border);
         }
 
         .section {
             padding: 80px 0;
-            border-bottom: 1px solid #404040;
+            border-bottom: 1px solid var(--section-border);
         }
 
         .accent-text {
@@ -37,36 +39,119 @@
         }
 
         .skill-badge {
-            background-color: #333333;
+            background-color: #3a3a3a;
             color: var(--text-color);
             padding: 8px 20px;
             margin: 5px;
             border-radius: 20px;
             border: 1px solid #555555;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
+
+        .skill-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .skill-badge:hover {
+            background-color: var(--skill-hover);
+            border-color: #6a6a6a;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .skill-badge:hover::before {
+            left: 100%;
+        }
+
+        .skill-badge:nth-child(1) { animation-delay: 0.1s; }
+        .skill-badge:nth-child(2) { animation-delay: 0.2s; }
+        .skill-badge:nth-child(3) { animation-delay: 0.3s; }
+        .skill-badge:nth-child(4) { animation-delay: 0.4s; }
+        .skill-badge:nth-child(5) { animation-delay: 0.5s; }
+        .skill-badge:nth-child(6) { animation-delay: 0.6s; }
+        .skill-badge:nth-child(7) { animation-delay: 0.7s; }
+        .skill-badge:nth-child(8) { animation-delay: 0.8s; }
 
         .timeline-item {
             border-left: 2px solid var(--accent-color);
             padding-left: 30px;
             margin-bottom: 40px;
+            opacity: 0;
+            transform: translateX(20px);
+            animation: fadeInRight 0.8s ease forwards;
+            transition: all 0.3s ease;
         }
 
-        .profile-img {
+        .timeline-item:hover {
+            background-color: rgba(255,255,255,0.05);
+            border-left-color: #6a6a6a;
+            transform: translateX(5px);
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+        .timeline-item:nth-child(6) { animation-delay: 0.6s; }
+
+        .profile-container {
             width: 100%;
             max-width: 250px;
             border-radius: 50%;
             border: 3px solid var(--accent-color);
+            overflow: hidden;
+            margin: 0 auto;
+            animation: fadeIn 1s ease, pulse 3s infinite ease-in-out;
+            transition: all 0.3s ease;
+        }
+
+        .profile-container:hover {
+            border-color: #6a6a6a;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.4);
+            transition: transform 0.5s ease;
+        }
+
+        .profile-container:hover .profile-img {
+            transform: scale(1.5);
         }
 
         .social-link {
             color: var(--text-color);
             font-size: 24px;
             margin: 0 10px;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            display: inline-block;
         }
+
+        .social-link:nth-child(1) { animation-delay: 0.3s; }
+        .social-link:nth-child(2) { animation-delay: 0.5s; }
 
         .social-link:hover {
             color: var(--accent-color);
+            transform: translateY(-5px) scale(1.2);
         }
 
         .contact-info {
@@ -79,18 +164,192 @@
             color: var(--accent-color);
         }
 
-        /* Work Section Image Styling */
-        .work-img {
-            position: relative;
-            padding: 10px;
-            border: 5px solid white;
-            background-color: #333;
+        .contact-info p {
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: fadeInLeft 0.8s ease forwards;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 8px;
         }
 
-        .work-img img {
+        .contact-info p:hover {
+            background-color: rgba(255,255,255,0.05);
+            transform: translateX(5px);
+        }
+
+        .contact-info p:nth-child(1) { animation-delay: 0.4s; }
+        .contact-info p:nth-child(2) { animation-delay: 0.6s; }
+
+        /* Collage Styles */
+        .collage-section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .collage-title {
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        .collage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .collage-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeInScale 0.8s ease forwards;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .collage-item:nth-child(1) { animation-delay: 0.1s; }
+        .collage-item:nth-child(2) { animation-delay: 0.2s; }
+        .collage-item:nth-child(3) { animation-delay: 0.3s; }
+        .collage-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .collage-item:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+            z-index: 10;
+        }
+
+        .collage-img {
             width: 100%;
-            height: auto;
-            border-radius: 8px;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .collage-item:hover .collage-img {
+            transform: scale(1.1);
+        }
+
+        .collage-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .collage-item:hover .collage-overlay {
+            transform: translateY(0);
+        }
+
+        .collage-caption {
+            color: white;
+            font-size: 14px;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.2);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        /* Animaciones para títulos */
+        h1, .lead, h3 {
+            opacity: 0;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        h1 { animation-delay: 0.1s; }
+        .lead:nth-of-type(1) { animation-delay: 0.2s; }
+        .lead:nth-of-type(2) { animation-delay: 0.3s; }
+        h3 { animation-delay: 0.4s; }
+
+        /* Efectos adicionales para el footer */
+        footer {
+            background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
+        }
+
+        .social-links .social-link {
+            opacity: 1;
         }
     </style>
 </head>
@@ -104,12 +363,46 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about"></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#experience"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#collage">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+
+        <!-- Collage Section -->
+    <section id="collage" class="collage-section">
+        <div class="container">
+            <h2 class="collage-title accent-text">Projects & Work</h2>
+            <div class="collage-grid">
+                <div class="collage-item">
+                    <img src="./imgs/1.jpeg" alt="Coding Project" class="collage-img">
+                    <div class="collage-overlay">
+                        <p class="collage-caption">Network Infrastructure</p>
+                    </div>
+                </div>
+                <div class="collage-item">
+                    <img src="./imgs/5.jpeg" alt="Network Setup" class="collage-img">
+                    <div class="collage-overlay">
+                        <p class="collage-caption">Network Infrastructure</p>
+                    </div>
+                </div>
+                <div class="collage-item">
+                    <img src="./imgs/Img1.jpg" alt="Server Room" class="collage-img">
+                    <div class="collage-overlay">
+                        <p class="collage-caption">Arduino</p>
+                    </div>
+                </div>
+                <div class="collage-item">
+                    <img src="./imgs/6.png" alt="Data Analysis" class="collage-img">
+                    <div class="collage-overlay">
+                        <p class="collage-caption">Web Development</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- About Section -->
     <section id="about" class="section">
@@ -117,20 +410,25 @@
             <div class="row align-items-center">
                 <!-- Left Column - Profile Image -->
                 <div class="col-md-4 text-center mb-5 mb-md-0">
-                    <img src="imgs/me.jpg" alt="Profile" class="profile-img">
+                    <div class="profile-container">
+                         <img src="imgs/me.jpg" alt="Profile" class="profile-img">
+                    </div>
                 </div>
                 
                 <!-- Right Column - Details -->
                 <div class="col-md-8">
                     <h1 class="display-4 mb-3">Jesus Daniel <span class="accent-text">Hernandez Bocanegra</span></h1>
+                    <h4 class="display-10 mb-3">25 years old</h4>
                     
                     <!-- Social Media Icons -->
                     <div class="mb-4">
                         <a href="https://github.com/Thecooldaniel64" class="social-link"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/jesus-daniel-hernandez-bocanegra-9b008322b/" class="social-link"><i class="fab fa-linkedin"></i></a>                    </div>
+                        <a href="https://www.linkedin.com/in/jesus-daniel-hernandez-bocanegra-9b008322b/" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    </div>
 
                     <p class="lead mb-4">Helpdesk Engineer</p>
-                    <p class="lead mb-4">Learn from the mistakes of others. You can’t live long enough to make them all yourself. -Eleanor Roosevelt</p>            
+                    <p class="lead mb-4">Learn from the mistakes of others. You can't live long enough to make them all yourself. -Eleanor Roosevelt</p>
+                    
                     <!-- Contact Information -->
                     <div class="contact-info">
                         <p class="mb-3">
@@ -147,27 +445,28 @@
                     <h3 class="accent-text mt-5 mb-4">Technical Skills</h3>
                     <div class="row">
                         <div class="col-6 col-md-4"><div class="skill-badge">Conversational English</div></div>
-                        <div class="col-6 col-md-4"><div class="skill-badge">Php</div></div>
-                        <div class="col-6 col-md-4"><div class="skill-badge">JavaScript</div></div>
-                        <div class="col-6 col-md-4"><div class="skill-badge">Sql</div></div>
-                        <div class="col-6 col-md-4"><div class="skill-badge">Github</div></div>
-                        <div class="col-6 col-md-4"><div class="skill-badge">Excel</div></div>
+                        <div class="col-6 col-md-4"><div class="skill-badge">Web Development</div></div>
                         <div class="col-6 col-md-4"><div class="skill-badge">Windows scripts (CMD, powershell)</div></div>
                         <div class="col-6 col-md-4"><div class="skill-badge">Voip configuration</div></div>
+                        <div class="col-6 col-md-4"><div class="skill-badge">Dns troubleshooting</div></div>
+                        <div class="col-6 col-md-4"><div class="skill-badge">End User Support</div></div>
+                        <div class="col-6 col-md-4"><div class="skill-badge">Networking</div></div>
+                        <div class="col-6 col-md-4"><div class="skill-badge">Server Installations</div></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+
+
     <!-- Experience Section -->
     <section id="experience" class="section">
-        
         <div class="container">
             <h2 class="mb-5 accent-text">Work Experience (Most relevant)</h2>
             <div class="timeline-item">
                 <h4>Infraestructure Helpdesk Engineer</h4>
-                <p class="text">Tijuana BC | Frebuary 2025 - Today | Solrite Energy</p>
+                <p class="text">Tijuana BC | Frebuary 2025 - Octobe 2025 | Solrite Energy</p>
                 <ul>
                     <li>Assisted in the deployment of a new server, applying Panduit cabling solutions to meet enterprise standardization requirements.</li>
                     <li>Diagnosed and resolved Windows OS issues to maintain user productivity and system stability.</li>
@@ -191,8 +490,7 @@
             </div>
             <div class="timeline-item">
                 <h4>Full Stack Developer .Net (Internship)</h4>
-                <p class="text">Tijuana BC | 13 March 2022 - 20 July| “Programacion Caret de Mexico
-                    S de RL de CV”</p>
+                <p class="text">Tijuana BC | 13 March 2022 - 20 July| "Programacion Caret de Mexico S de RL de CV"</p>
                 <ul>
                     <li>Backend to Frontend web development with Visual Studio.</li>
                     <li>Use of Bootstrap, Javascript, c#, GIT for versioning, Angular.</li>
@@ -208,8 +506,7 @@
                     <li>Use of Salesforce to create cases</li>
                     <li>Technical support for IP video terminals made by PolyCom.</li>
                     <li>Technical support for IP phone systems made by PolyCom.</li>
-                    <li>Use documentation from HP to provide Ip configuration to perform VOIP
-                        calls.</li>
+                    <li>Use documentation from HP to provide Ip configuration to perform VOIP calls.</li>
                 </ul>
             </div>
             <div class="timeline-item">
@@ -217,26 +514,42 @@
                 <p class="text">Tijuana BC | August 2021 - Dic 2021| Instituto Frontera</p>
                 <ul>
                     <li>Use of Git to maintain the code.</li>
-                    <li>Use of Php laravel framework to maintain a virtual classroom like google
-                        classroom.</li>
+                    <li>Use of Php laravel framework to maintain a virtual classroom like google classroom.</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    
-
-<footer class="bg-dark text-center text-white py-4">
-    <div class="container">
-        <div class="social-links">
-            <a href="https://github.com/Thecooldaniel64" class="social-link" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/jesus-daniel-hernandez-bocanegra-9b008322b/" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>
+    <footer class="text-center text-white py-4">
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/Thecooldaniel64" class="social-link" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/jesus-daniel-hernandez-bocanegra-9b008322b/" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Animación cuando los elementos entran en la vista
+        function checkAnimations() {
+            $('.skill-badge, .timeline-item, .social-link, .contact-info p, h1, .lead, h3, .collage-title, .collage-item').each(function() {
+                var elementTop = $(this).offset().top;
+                var elementBottom = elementTop + $(this).outerHeight();
+                var viewportTop = $(window).scrollTop();
+                var viewportBottom = viewportTop + $(window).height();
+                
+                if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                    $(this).css('animation-play-state', 'running');
+                }
+            });
+        }
+        
+        $(window).on('scroll resize', checkAnimations);
+        $(document).ready(checkAnimations);
+    </script>
 </body>
 </html>
